@@ -1,6 +1,6 @@
 import type { Message, StreamChunk } from "../types";
 
-const PROXY_URL = "https://ancient-wave-627d.feofanovaaleksandra1.workers.dev";
+const PROXY_URL = "/chat.ts";
 
 export async function* streamChat(
   messages: Message[],
