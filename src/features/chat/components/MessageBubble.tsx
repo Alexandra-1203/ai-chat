@@ -32,7 +32,7 @@ export function MessageBubble({
           onClick={() => onTogglePin(chatId, message.id)}
           className={`absolute top-2 ${
             isUser ? "-left-8" : "-right-8"
-          } p-1 rounded-full text-slate-400 hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-all ${
+          } p-1 rounded-full text-slate-400 hover:text-blue-500 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all ${
             message.isPinned ? "opacity-100 text-blue-500" : ""
           }`}
           title={
