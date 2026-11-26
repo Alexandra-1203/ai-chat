@@ -1,75 +1,35 @@
-# React + TypeScript + Vite
+# AI Chat
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение для общения с искусственным интеллектом (на базе Groq API) в режиме реального времени. Поддерживает стриминг ответов (эффект печатной машинки), управление историей чатов и безопасную архитектуру.
 
-Currently, two official plugins are available:
+**Демо:** [ai-chat1203.duckdns.org](https://ai-chat1203.duckdns.org)
+_(Примечание: для получения ответов может потребоваться VPN)._
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Основные фичи
 
-## React Compiler
+- **Стриминг (SSE):** Ответ от ИИ приходит токенами в реальном времени.
+- **История чатов:** Создание, переименование, удаление и закрепление диалогов.
+- **Закрепление сообщений:** Возможность закрепить важное сообщение внутри чата с автоскроллом к нему.
+- **Сохранение данных:** Все чаты сохраняются в `localStorage`.
+- **UX/UI:** Сворачиваемый сайдбар, темная/светлая тема, адаптив под мобильные устройства.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Стек
 
-## Expanding the ESLint configuration
+- **React 18 + TypeScript**
+- **Zustand**
+- **Tailwind CSS**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🧠 Архитектурные решения
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1.  **Безопасность:** API-ключ Groq скрыт на прокси-сервере (Cloudflare Worker).
+2.  **Чтение потока:** Для стриминга используется `ReadableStream` и `TextDecoder`. Написан буфер, который склеивает разрезанные пакеты JSON.
+3.  **Асинхронные генераторы:** Функция `streamChat` написана как `async function*` и выдает кусочки текста через `yield`.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Запуск локально
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+git clone https://github.com/Alexandra-1203/ai-chat.git
+cd ai-chat
+npm install
+npm run dev
 ```
